@@ -1,0 +1,3 @@
+# this file to prevent this files to be shared in the github because of the personal info
+node_modules/
+config.env
