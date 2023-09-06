@@ -170,7 +170,7 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
 
 
 
-exports.createCardOrder= async (session)=>{
+const createCardOrder= async (session)=>{
   const cartId = session.client_reference_id
   const shippingAdress = session.metadata 
   const orderPrice = session.total_details[0]
@@ -205,9 +205,9 @@ exports.createCardOrder= async (session)=>{
   
 }
 
-//webhook used to make a endpoint by listen an specific event from stripe
-//in our case we use webhook to make a endpoint after  listen to the checkout.session.completed to create a order after it
-//webhook don't work on localhost so we must deploy our app
+//@desc   thsi webhook will run when the stripe payment is complete
+//@route  post /webhook-checkout
+//@access protected/user
 exports.webhookCheckout = asyncHandler(async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
 
