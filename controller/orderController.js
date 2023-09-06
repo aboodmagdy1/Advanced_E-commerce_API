@@ -181,11 +181,11 @@ exports.webhookCheckout = asyncHandler(async (req, res, next) => {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
-
   } catch (err) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
-  if (event.type ===" checkout.session.completed") {
-    window.location('https://e-shop-1.onrender.com/api/v1/products')
+
+  if (event.type === "checkout.session.completed") {
+    console.log("Create order");
   }
 });

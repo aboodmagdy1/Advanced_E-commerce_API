@@ -14,7 +14,7 @@ const AppError = require("./util/AppError");
 const dbConnection = require("./config/database");
 const globalHandlerMiddleware = require("./middleware/errorMiddleware");
 const mountRoutes = require("./routes/index");
-const {webhookCheckout} = require('./controller/orderController')
+const { webhookCheckout } = require("./controller/orderController");
 
 //dbConnection
 dbConnection();
@@ -27,8 +27,11 @@ app.options("*", cors()); //in case of update image in frontend
 app.use(compression()); //compress all the returned responses.....
 
 //checkout webhook
-app.post("/webhook-checkout", express.raw({ type: "application/json" }),webhookCheckout);
-
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhookCheckout
+);
 //middleware
 app.use(express.json()); //convert the json format to js object (req.body form json to object )
 //to serve the static files like images in browser (go the browser the urel loaclhost:300/categories/imageName) it will get the image from the server
