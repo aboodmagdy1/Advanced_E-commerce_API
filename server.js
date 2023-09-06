@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === "development") {
 } else {
   console.log(`mode is ${process.env.NODE_ENV}`);
 }
-// testing 3
+
 //Routes
 mountRoutes(app);
 
