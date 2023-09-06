@@ -181,11 +181,11 @@ exports.webhookCheckout = asyncHandler(async (req, res, next) => {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
-    console.log('create event')
+
   } catch (err) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
-  if (event.type === checkout.session.completed) {
+  if (event.type ===" checkout.session.completed") {
     console.log("Create order Here.....");
   }
 });

@@ -42,7 +42,6 @@ if (process.env.NODE_ENV === "development") {
 
 //Routes
 mountRoutes(app);
-console.log('hellow world')
 //unHandled routes (cathc the routes that i don't make it like /api/(v2)/categories)
 app.all("*", (req, res, next) => {
   next(new AppError(`Cant find this route : ${req.originalUrl}`, 400)); //send it to erro handling middleware
