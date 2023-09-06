@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
- <img src="https://github.com/aboodmagdy1/E-Shop/Public/imgs/public/img/E-Shop Icon.jpg" alt="E-Shop" width="200">
+ <img src="https://github.com/aboodmagdy1/blob/master/E-Shop/Public/imgs/public/img/E-Shop Icon.jpg" alt="E-Shop" width="200">
   <br>
   E-Shop
   <br>
