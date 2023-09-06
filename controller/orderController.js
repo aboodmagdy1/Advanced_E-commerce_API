@@ -2,6 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_kEY);
 const asyncHandler = require("express-async-handler");
 const factory = require("./handlersFactory");
 const Order = require("../models/orderModel");
+const User = require("../models/userModel");
 const Cart = require("../models/cartModel");
 const Product = require("../models/productModle");
 const AppError = require("../util/AppError");
@@ -167,6 +168,43 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+
+exports.createCardOrder= async (session)=>{
+  const cartId = session.client_reference_id
+  const shippingAdress = session.metadata 
+  const orderPrice = session.total_details[0]
+
+  const cart = await Cart.findById(cartId)
+  const user = await User.findOne({email:session.customer_email})
+
+    //3)Create order with  paymentMethodType(card)
+    const order = await Order.create({
+      user:user._id,
+      cartItems: cart.cartItems,
+      totalOrderPrice:orderPrice,
+      shippingAdress,
+      isPaid:true,
+      paidAt:Date.now(),
+      paymentMethodType:'card',
+
+    });
+
+    if (order) {
+      const bulkOption = cart.cartItems.map((item) => ({
+        updateOne: {
+          filter: { _id: item.product },
+          update: { $inc: { quantity: -item.quantity, sold: +item.quantity } },
+        },
+      }));
+      await Product.bulkWrite(bulkOption, {});
+  
+      //5)clear delete  depend on cartId
+      await Cart.findByIdAndDelete(cartId);
+    }
+  
+}
+
 //webhook used to make a endpoint by listen an specific event from stripe
 //in our case we use webhook to make a endpoint after  listen to the checkout.session.completed to create a order after it
 //webhook don't work on localhost so we must deploy our app
@@ -186,6 +224,8 @@ exports.webhookCheckout = asyncHandler(async (req, res, next) => {
   }
 
   if (event.type === "checkout.session.completed") {
-    console.log("Create order");
+    createCardOrder(event.data.object)
   }
+
+  res.status(200).json({received :true})
 });
