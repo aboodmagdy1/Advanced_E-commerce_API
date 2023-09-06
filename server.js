@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 // eslint-disable-next-line import/no-extraneous-dependencies, node/no-unpublished-require
 const compression = require("compression");
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_kEY);
 const path = require("path");
 const dotenv = require("dotenv");
 
@@ -14,6 +14,7 @@ const AppError = require("./util/AppError");
 const dbConnection = require("./config/database");
 const globalHandlerMiddleware = require("./middleware/errorMiddleware");
 const mountRoutes = require("./routes/index");
+const {webhookCheckout} = require('./controller/orderController')
 
 //dbConnection
 dbConnection();
@@ -24,6 +25,10 @@ app.use(cors());
 app.options("*", cors()); //in case of update image in frontend
 
 app.use(compression()); //compress all the returned responses.....
+
+//checkout webhook
+app.post("/webhook-checkout", express.raw({ type: "application/json" }),webhookCheckout);
+
 //middleware
 app.use(express.json()); //convert the json format to js object (req.body form json to object )
 //to serve the static files like images in browser (go the browser the urel loaclhost:300/categories/imageName) it will get the image from the server

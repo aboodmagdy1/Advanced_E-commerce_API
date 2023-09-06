@@ -121,7 +121,7 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
   const shippingPrice = 0;
   //1)Get cart based on cartId
   const { cartId } = req.params;
-  const cart = await Cart.findById(cartId)
+  const cart = await Cart.findById(cartId);
   if (!cart) {
     return next(new AppError(`There is no cart with this id:${cartId}`, 404));
   }
@@ -143,15 +143,15 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
     //info about user
     customer_email: req.user.email,
     //info about the product
-    
+
     line_items: [
       {
         price_data: {
           unit_amount: totalOrderPrice * 100, //we do 100 because stripe if num is 1000  appr 10 an so on
           currency: "usd",
-          product_data:{
-            name:"product"
-          }
+          product_data: {
+            name: "product",
+          },
         },
         quantity: 1,
       },
@@ -167,6 +167,24 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
   });
 });
 
-//webhook used to make a endpoint by listen an specific event from stripe 
-//in our case we use webhook to make a endpoint after  listen to the checkout.session.completed to create a order after it 
+//webhook used to make a endpoint by listen an specific event from stripe
+//in our case we use webhook to make a endpoint after  listen to the checkout.session.completed to create a order after it
 //webhook don't work on localhost so we must deploy our app
+exports.webhookCheckout = asyncHandler(async (req, res, next) => {
+  const sig = req.headers["stripe-signature"];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    return  res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+  if(event.type ===checkout.session.completed){
+    console.log('Create order Here.....')
+  }
+});
