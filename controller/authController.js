@@ -7,6 +7,7 @@ const AppError = require("../util/AppError");
 const sendEmail = require("../util/sendEmail");
 const User = require("../models/userModel");
 const createToken = require('../util/createToken')
+const {sanitizeUser} = require('../util/sanitizeData')
 
 //@desc Singup
 //@route POST /api/v1/auth/singup
@@ -44,7 +45,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     token,
-    user,
+    data:sanitizeUser(user),
   });
 });
 
