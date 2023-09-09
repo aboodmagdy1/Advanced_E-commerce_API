@@ -205,7 +205,7 @@ const createCardOrder= async (session)=>{
   
 }
 
-//@desc   thsi webhook will run when the stripe payment is complete
+//@desc   this webhook will run when the stripe payment is complete
 //@route  post /webhook-checkout
 //@access protected/user
 exports.webhookCheckout = asyncHandler(async (req, res, next) => {
