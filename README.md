@@ -95,7 +95,7 @@
 
 
 ## Setting Up Your Local Environment ⚙️
-![demo-env-file](https://github.com/aboodmagdy1/E-Shop/blob/main/Public/imgs/'env settings.png')
+![demo-env-file](https://github.com/aboodmagdy1/E-Shop/blob/main/Public/imgs/envSetting.png)
 
 
 ## Installation 🛠️
@@ -104,9 +104,6 @@ dependencies by running
 ```
 $ npm i
 Set your env variables
-$ npm run watch:js
-$ npm run build:js
 $ npm run start:dev (for development)
 $ npm run start:prod (for production)
-$ npm run debug (for debug)
-$ npm start
+
