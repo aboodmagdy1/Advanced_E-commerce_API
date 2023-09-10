@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">An awesome E-Shop site built on top of <a href="https://nodejs.org/en/" target="_blank">NodeJS</a>.</h4>
+<h4 align="center">An awesome E-Shop API built on top of <a href="https://nodejs.org/en/" target="_blank">NodeJS</a>.</h4>
 
 ## Key Features 📝
 
