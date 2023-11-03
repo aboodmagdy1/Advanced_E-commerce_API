@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://lakshman-natours.herokuapp.com/"><img src="https://github.com/aboodmagdy1/E-Shop/blob/main/Public/imgs/E-Shop%20Icon.jpg" alt="Natours" width="200"></a>
+  <img src="https://github.com/aboodmagdy1/E-Shop/blob/main/Public/imgs/E-Shop%20Icon.jpg" alt="Natours" width="200">
   <br>
   Advanced_E-commerce_API
 
